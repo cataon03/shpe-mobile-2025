@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner:
           false, // Hides the debug banner in the top-right corner
-      home: BackgroundImageScreen(),
+      home: HomeScreen(),
     );
   }
 }
