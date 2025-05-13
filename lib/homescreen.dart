@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shpeucfmobile/custom_button.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,12 +15,12 @@ class HomeScreen extends StatelessWidget {
           Image.asset('lib/images/background.png', fit: BoxFit.cover),
           // SHPE Logo
           Positioned(
-            top: 50,
+            top: 10,
             left: 20,
             right: 0,
             child: Align(
               alignment: Alignment.topCenter,
-              child: Image.asset('lib/images/SHPE_LogoU.png', width: 650),
+              child: SvgPicture.asset('lib/images/SHPE_Logo.svg', width: 450),
             ),
           ),
           // Login and Sign Up buttons
