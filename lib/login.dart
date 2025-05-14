@@ -33,6 +33,7 @@ class LoginState extends State<Login> {
           ),
 
           //subheading
+          //maybe change so the elements are in a column? for now we're good
           Positioned(
             top: 70,
             left: 0,
@@ -66,28 +67,39 @@ class LoginState extends State<Login> {
                       labelText: 'Password',
                     ),
                   ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    //changed custom button to elevated bc of hardcoded font size
+                    child: ElevatedButton(
+                      child: Text('Forgot Password?'),
+                    
+                      onPressed: (){
+                        print('clicked forgot password!');
+                      },
+                    ),
+                  )
                 ],
               ),
             ),
           ),
 
           //forgot password button
-          Positioned(
-            bottom: 400,
-            left: 30,
-            right: 0,
-            child: Center(
-              child: CustomButton(
-                text: 'Forgot password?',
-                backgroundColor: Colors.transparent,
-                textColor: Color(0xFFF1F3F7),
+          // Positioned(
+          //   bottom: 400,
+          //   left: 30,
+          //   right: 0,
+          //   child: Center(
+          //     child: CustomButton(
+          //       text: 'Forgot password?',
+          //       backgroundColor: Colors.transparent,
+          //       textColor: Color(0xFFF1F3F7),
 
-                onPressed: () {
-                  print('clicked forgot password!');
-                },
-              ),
-            ),
-          ),
+          //       onPressed: () {
+          //         print('clicked forgot password!');
+          //       },
+          //     ),
+          //   ),
+          // ),
 
           //login button
           Positioned(
