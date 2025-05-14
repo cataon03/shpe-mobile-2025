@@ -13,6 +13,7 @@ class LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         fit: StackFit.expand,
         //Background image
@@ -50,29 +51,27 @@ class LoginState extends State<Login> {
           //email and pass textbox
           Positioned(
             top: 300,
-            left: 0,
-            right: 0,
+            left: 20,
+            right: 20,
             child: Center(
               child: Column(
                 children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'UCF Email',
-                    ),
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Password',
-                    ),
-                  ),
+                  InputField(text: 'UCF Email'),
+                  SizedBox(height: 15),
+                  InputField(text: 'Password'),
                   Align(
                     alignment: Alignment.centerRight,
                     //changed custom button to elevated bc of hardcoded font size
                     child: ElevatedButton(
-                      child: Text('Forgot Password?'),
-                    
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                      ),
+                      child: Text('Forgot Password?',
+                        style: TextStyle(
+                          color: Color(0xFFF1F3F7),
+                        )
+                      ),
+                      
                       onPressed: (){
                         print('clicked forgot password!');
                       },
@@ -119,6 +118,28 @@ class LoginState extends State<Login> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+//custom textformfield for repeated use
+class InputField extends StatelessWidget {
+  const InputField({
+    super.key,
+    required this.text,
+  });
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Color(0xFFF1F3F7),
+        border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(30.0))),
+        labelText: text,
       ),
     );
   }
