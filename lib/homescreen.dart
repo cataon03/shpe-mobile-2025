@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shpeucfmobile/custom_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shpeucfmobile/login.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -38,7 +39,11 @@ class HomeScreen extends StatelessWidget {
                     textColor: Color(0xFFF1F3F7),
                     // TODO: Go to login page
                     onPressed: () {
-                      print('SHPE IS THE BEST!!!');
+                      //print('SHPE IS THE BEST!!!');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Login()),
+                      );
                     },
                   ),
                   const SizedBox(height: 19), // Spacing between buttons
@@ -48,7 +53,7 @@ class HomeScreen extends StatelessWidget {
                     textColor: Color(0xFFF2AC02),
                     // TODO: Go to Sign Up page
                     onPressed: () {
-                      print('Go Knights Charge On!');
+                      //print('Go Knights Charge On!');
                     },
                   ),
                 ],
