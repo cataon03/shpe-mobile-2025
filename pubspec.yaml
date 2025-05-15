@@ -92,3 +92,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+  
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: fonts/Poppins-Regular.ttf
+        
+    - family: Adumu
+      fonts:
+        - asset: fonts/Adumu.ttf
+        
