@@ -18,8 +18,8 @@ class HomeScreen extends StatelessWidget {
           // SHPE Logo
           Positioned(
             top: 50,
-            left: 20,
-            right: 0,
+            left: 30,
+            right: 30,
             child: Align(
               alignment: Alignment.topCenter,
               child: SvgPicture.asset('lib/images/SHPE_Logo.svg', width: 450),
@@ -38,9 +38,7 @@ class HomeScreen extends StatelessWidget {
                     text: 'Login  ',
                     backgroundColor: Color(0xFFF2AC02),
                     textColor: Color(0xFFF1F3F7),
-                    // TODO: Go to login page
                     onPressed: () {
-                      //print('SHPE IS THE BEST!!!');
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const Login()),

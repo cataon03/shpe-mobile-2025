@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shpeucfmobile/custom_button.dart';
 import 'package:shpeucfmobile/homescreen.dart';
+import 'package:shpeucfmobile/custom_inputFields.dart';
 TextEditingController _dateController = TextEditingController();
 
 // TODO
@@ -22,6 +23,7 @@ class SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -30,32 +32,25 @@ class SignUpState extends State<SignUp> {
 
           // CREATE ACCOUNT title with stroke + fill
           Positioned(
-            top: 55,         // tweak as needed
-            left: 0,
-            right: 0,
+            top: 60,         // tweak as needed
+            left: 17,
+            right: 17,
             child: Stack(
               alignment: Alignment.topCenter,
               children: [
-                // 1) Outline
-                Text(
-                  'CREATE ACCOUNT',
-                  style: TextStyle(
-                    fontFamily: 'Adumu',
-                    fontSize: 45,
-                    foreground: Paint()
-                      ..style = PaintingStyle.stroke
-                      ..strokeWidth = 4
-                      ..color = Colors.black,
-                  ),
-                ),
-                // 2) Fill
-                Text(
-                  'CREATE ACCOUNT',
-                  style: TextStyle(
-                    fontFamily: 'Adumu',
-                    fontSize: 45,
-                    color: Color(0xFFFFC13B),
-                  ),
+                Column(
+                  children: [
+                    SHPEHeaderText(text: 'CREATE ACCOUNT'),
+                    SizedBox(height: 3),
+                    Text(
+                      'Already registered? Log in here.',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Color(0xFFF1F3F7),
+                      )
+                    ),
+                  ],
                 ),
               ],
 
@@ -63,22 +58,27 @@ class SignUpState extends State<SignUp> {
           ),
           // SignUp form 
           Positioned(
-            bottom: 200,
+            bottom: 50,
             left: 20,
             right: 20,
             child: Align(
               alignment: Alignment.center,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // all the input buttons implemented from login dart
-                  InputField(text: 'First Name',),
-                  SizedBox(height: 20),
+                  InputField(text: 'First Name'),
+                  SizedBox(height: 25),
                   InputField(text: 'Last Name'),
-                  SizedBox(height: 20),
+                  SizedBox(height: 25),
                   InputField(text: 'UCF Email'),
-                  SizedBox(height: 20),
+                  SizedBox(height: 25),
                   InputField(text: 'UCF ID'),
-                  SizedBox(height: 20),
+                  SizedBox(height: 25),
+
+                  // this line below was cam testing smth out
+                  //PasswordInputField(text: 'Password'),
+
                   // more specific text boxes
                   TextField(
                     decoration: InputDecoration(
@@ -86,12 +86,16 @@ class SignUpState extends State<SignUp> {
                       fillColor: Color(0xFFF1F3F7),
                       border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(30.0))),
                       labelText: 'Password',
+                      labelStyle: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                      ),
                       suffixIcon: Icon(Icons.password),
                     ),
                     obscureText: true,
 
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 25),
 
                   //date picker
                   TextField(
@@ -113,16 +117,24 @@ class SignUpState extends State<SignUp> {
                       filled: true,
                       fillColor: Color(0xFFF1F3F7),
                       border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                      labelText: "Date",
+                      labelText: "Birthday (MM/DD)",
+                      labelStyle: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                      ),
                       suffixIcon: Icon(Icons.calendar_today)
                     ),
                   ),
                   SizedBox(height: 50),
                   // Submission button
-                  CustomButton(text: 'SignUp', backgroundColor: Color(0xFFF2AC02) , textColor: Color(0xFFF1F3F7), onPressed: (){
-                    // Either navigate back to homescreen or actual app
-                    Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen())
+                  CustomButton(
+                    text: 'Sign Up',
+                    backgroundColor: Color(0xFFF2AC02),
+                    textColor: Color(0xFFF1F3F7),
+                    onPressed: (){
+                      // Either navigate back to homescreen or actual app
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const HomeScreen())
                     );
                   }
                    )
@@ -140,24 +152,43 @@ class SignUpState extends State<SignUp> {
 }
 
 
-
-class InputField extends StatelessWidget {
-  const InputField({
+//header font
+class SHPEHeaderText extends StatelessWidget {
+  
+  final String text;
+  
+  const SHPEHeaderText({
     super.key,
     required this.text,
-  });
-
-  final String text;
+    });
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Color(0xFFF1F3F7),
-        border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(30.0))),
-        labelText: text,
-      ),
+    return Stack(
+      children: [
+        // 1) Fill
+        Text(
+           text,
+           style: TextStyle(
+            fontFamily: 'Adumu',
+            fontSize: 41,
+            color: Color(0xFFF2AC02),
+          ),
+        ),
+        // 2) Outline
+        // TODO: figure out how to offset the outline like the mockup img
+        Text(
+          text,
+           style: TextStyle(
+            fontFamily: 'Adumu',
+            fontSize: 41,
+            foreground: Paint()
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 2
+              ..color = Colors.black,
+            ),
+        ),
+      ]
     );
   }
 }
