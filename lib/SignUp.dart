@@ -22,129 +22,110 @@ class SignUp extends StatefulWidget {
 class SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
         fit: StackFit.expand,
         children: [
           // Background image
-          Image.asset('lib/images/background.png', fit: BoxFit.cover),
+          Positioned.fill(
+            child: Image.asset('lib/images/background.png', fit: BoxFit.cover)
+            ),
 
-          // CREATE ACCOUNT title with stroke + fill
-          Positioned(
-            top: 60,         // tweak as needed
-            left: 17,
-            right: 17,
+          SafeArea(  // SafeArea to avoid different phone UI
+            minimum: EdgeInsets.only(top: 50),
             child: Stack(
-              alignment: Alignment.topCenter,
               children: [
-                Column(
-                  children: [
-                    SHPEHeaderText(text: 'CREATE ACCOUNT'),
-                    SizedBox(height: 3),
-                    Text(
-                      'Already registered? Log in here.',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Color(0xFFF1F3F7),
-                      )
-                    ),
-                  ],
+                Padding(
+                  padding: EdgeInsets.only(bottom: bottomInset > 0 ? bottomInset : 180),
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.only(top: 0, left: 20, right: 20,),
+                    child: Column(
+                      children: [
+                        SHPEHeaderText(text: 'CREATE ACCOUNT'),
+                        SizedBox(height: 43), //space before inputs
+                        InputField(text: 'First Name'),
+                        SizedBox(height: 25),
+                        InputField(text: 'Last Name'),
+                        SizedBox(height: 25),
+                        InputField(text: 'UCF Email'),
+                        SizedBox(height: 25),
+                        InputField(text: 'UCF ID'),
+                        SizedBox(height: 25),
+                        PasswordInputField(text: 'Password'),
+                        SizedBox(height: 25),               
+                
+                        // date picker
+                        TextField(
+                          controller: _dateController, // opens up the date selector respective to each os
+                          readOnly: true, //prevents keyboard from showing
+                          onTap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1950),
+                              lastDate: DateTime(2100),
+                            );
+                            if (pickedDate != null) {
+                              String formatted = "${pickedDate.month.toString().padLeft(2, '0')}/${pickedDate.day.toString().padLeft(2, '0')}";
+                              _dateController.text = formatted;
+                            }
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Color(0xFFF1F3F7),
+                            border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                            labelText: "Birthday (MM/DD)",
+                            labelStyle: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.bold,
+                            ),
+                            suffixIcon: Icon(Icons.calendar_today)
+                          ),
+                        ),
+                
+                
+                      ],
+                    )
+                  ),
                 ),
-              ],
 
+                Positioned(
+                  bottom: 20, 
+                  left: 20,
+                  right: 20,
+                  child: Column(
+                    children: [
+                      // sign up button
+                      CustomButton(
+                        text: 'Sign Up',
+                        backgroundColor: Color(0xFFF2AC02),
+                        textColor: Color(0xFFF1F3F7),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const HomeScreen()),
+                          );
+                        }),
+                        SizedBox(height: 10),
+
+                        //log in? text
+                        Text(
+                          'Already Registered? Log in here.',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Color(0xFFF1F3F7),
+                          )
+                        )
+                    ],
+                  )
+                )
+              ],
             ),
           ),
-          // SignUp form 
-          Positioned(
-            bottom: 50,
-            left: 20,
-            right: 20,
-            child: Align(
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // all the input buttons implemented from login dart
-                  InputField(text: 'First Name'),
-                  SizedBox(height: 25),
-                  InputField(text: 'Last Name'),
-                  SizedBox(height: 25),
-                  InputField(text: 'UCF Email'),
-                  SizedBox(height: 25),
-                  InputField(text: 'UCF ID'),
-                  SizedBox(height: 25),
-
-                  // this line below was cam testing smth out
-                  //PasswordInputField(text: 'Password'),
-
-                  // more specific text boxes
-                  TextField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Color(0xFFF1F3F7),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                      labelText: 'Password',
-                      labelStyle: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.bold,
-                      ),
-                      suffixIcon: Icon(Icons.password),
-                    ),
-                    obscureText: true,
-
-                  ),
-                  SizedBox(height: 25),
-
-                  //date picker
-                  TextField(
-                    controller: _dateController, // opens up the date selector respective to each os
-                    readOnly: true, //prevents keyboard from showing
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1950),
-                        lastDate: DateTime(2100),
-                      );
-                      if (pickedDate != null) {
-                        String formatted = "${pickedDate.month.toString().padLeft(2, '0')}/${pickedDate.day.toString().padLeft(2, '0')}";
-                        _dateController.text = formatted;
-                      }
-                    },
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Color(0xFFF1F3F7),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                      labelText: "Birthday (MM/DD)",
-                      labelStyle: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.bold,
-                      ),
-                      suffixIcon: Icon(Icons.calendar_today)
-                    ),
-                  ),
-                  SizedBox(height: 50),
-                  // Submission button
-                  CustomButton(
-                    text: 'Sign Up',
-                    backgroundColor: Color(0xFFF2AC02),
-                    textColor: Color(0xFFF1F3F7),
-                    onPressed: (){
-                      // Either navigate back to homescreen or actual app
-                      Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen())
-                    );
-                  }
-                   )
-                  
-                ],
-              )
-            ),
-
-
-          )
         ],
       ),
     );

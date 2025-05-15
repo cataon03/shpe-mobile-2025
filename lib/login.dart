@@ -12,7 +12,6 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State<Login> {
-  //TODO
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +88,7 @@ class LoginState extends State<Login> {
                 children: [
                   InputField(text: 'UCF Email'),
                   SizedBox(height: 15),
-                  InputField(text: 'Password'),
+                  PasswordInputField(text: 'Password'),
                   Align(
                     alignment: Alignment.centerRight,
 

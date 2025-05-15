@@ -54,25 +54,31 @@ class InputField extends StatelessWidget {
 //   }
 // }
 
-// class PasswordInputField extends StatelessWidget {
-//   const PasswordInputField({
-//     super.key,
-//     required this.text,
-//   });
 
-//   final String text;
+// the same as standard but has the icon and obscures text
+class PasswordInputField extends StatelessWidget {
+  const PasswordInputField({
+    super.key,
+    required this.text,
+  });
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return TextFormField(
-//       decoration: InputDecoration(
-//         filled: true,
-//         fillColor: Color(0xFFF1F3F7),
-//         border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(30.0))),
-//         labelText: text,
-//         suffixIcon: Icon(Icons.password),
-//       ),
-//       obscureText: true,
-//     );
-//   }
-// }
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Color(0xFFF1F3F7),
+        border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(30.0))),
+        labelText: text,
+        labelStyle: TextStyle(
+          fontFamily: 'Poppins',
+          fontWeight: FontWeight.bold,
+        ),
+        suffixIcon: Icon(Icons.password),
+      ),
+      obscureText: true,
+    );
+  }
+}
