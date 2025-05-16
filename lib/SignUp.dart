@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:shpeucfmobile/custom_button.dart';
 import 'package:shpeucfmobile/homescreen.dart';
 import 'package:shpeucfmobile/custom_inputFields.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 TextEditingController _dateController = TextEditingController();
 
 // TODO
@@ -11,6 +13,17 @@ TextEditingController _dateController = TextEditingController();
 
 // Thoughts
 // Can maybe breakdown the login in process to two pages?
+
+// Load database
+final supabase = Supabase.instance.client;
+
+// demo
+Future<void> fetchData() async {
+  final data = await supabase
+    .from("users")
+    .select();
+  print(data);
+}
 
 
 class SignUp extends StatefulWidget {
@@ -105,6 +118,7 @@ class SignUpState extends State<SignUp> {
                         backgroundColor: Color(0xFFF2AC02),
                         textColor: Color(0xFFF1F3F7),
                         onPressed: () {
+                          fetchData();
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => const HomeScreen()),

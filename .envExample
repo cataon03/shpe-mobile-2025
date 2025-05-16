@@ -1,0 +1,3 @@
+## rename this file to .env 
+SUPABASE_URL = Find it in supabase 
+SUPABASE_ANON_KEY = Find it in supabase 
