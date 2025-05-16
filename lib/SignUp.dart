@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shpeucfmobile/custom_button.dart';
 import 'package:shpeucfmobile/homescreen.dart';
@@ -112,12 +113,30 @@ class SignUpState extends State<SignUp> {
                         SizedBox(height: 10),
 
                         //log in? text
-                        Text(
-                          'Already Registered? Log in here.',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Color(0xFFF1F3F7),
+                        RichText(
+                          text: TextSpan(
+                            text: 'Already Registered? ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Color(0xFFF1F3F7),
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'Log in here.',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Color(0xFFF1F3F7),
+                                  decoration: TextDecoration.underline,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.pushNamed(context, '/login');
+                                    print('clicked log in!');
+                                  }
+                              )
+                            ]
                           )
                         )
                     ],

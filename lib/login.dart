@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shpeucfmobile/custom_button.dart';
 import 'package:shpeucfmobile/custom_inputFields.dart';
@@ -40,22 +41,31 @@ class LoginState extends State<Login> {
                         InputField(text: 'UCF Email'),
                         SizedBox(height: 15),
                         PasswordInputField(text: 'Password'),
-                        //forgot password button
+                        SizedBox(height: 5),
+
+                        //forgot password link
+                        //TODO: route this to actual target screen once it's up
                         Align(
                           alignment: Alignment.centerRight,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.transparent,
-                            ),
-                            child: Text('Forgot Password?',
-                              style: TextStyle(
-                                color: Color(0xFFF1F3F7),
+                          child: Padding(
+                            padding: EdgeInsets.only(right: 12),
+                            child: RichText(
+                              text: TextSpan(
+                                text: 'Forgot Password?',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color: Color(0xFFF1F3F7),
+                                  fontSize: 15,
+                                  decoration: TextDecoration.underline,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.pushNamed(context, '/');
+                                    print('clicked forgot password!');
+                                  }
                               )
                             ),
-                            onPressed: (){
-                              print('clicked forgot password!');
-                            },
-                          ),
+                          )
                         )
                       ]
                     )
@@ -83,14 +93,32 @@ class LoginState extends State<Login> {
                           },
                         ),
                         SizedBox(height: 10),
-                        //redirect text
-                         Text(
-                          'Don\'t have an account? Sign up',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Color(0xFFF1F3F7),
-                          ),
+                        //redirect text to login page
+                        RichText(
+                          text: TextSpan(
+                            text: 'Don\'t have an account? ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Color(0xFFF1F3F7),
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'Sign up',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Color(0xFFF1F3F7),
+                                  decoration: TextDecoration.underline,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.pushNamed(context, '/signup');
+                                    print('clicked sign up!');
+                                  }
+                              )
+                            ]
+                          )
                         )
                       ],
                     ),
@@ -98,9 +126,7 @@ class LoginState extends State<Login> {
                 ),
               ],
             ),
-          ),
-
-          
+          ), 
         ],
       ),
     );
