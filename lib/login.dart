@@ -18,120 +18,89 @@ class LoginState extends State<Login> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         fit: StackFit.expand,
-        //Background image
         children: [
+          //Background image
           Image.asset('lib/images/background.png', fit: BoxFit.cover),
-          Positioned(
-            top: 55,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Column(
-                children: [
-                  SHPEHeaderText(text: 'WELCOME BACK'),
-                  SizedBox(height: 3),
-                  Text(
-                    'Don\'t have an account? Sign up',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Color(0xFFF1F3F7),
-                    ),
-                  )
-                ]
-              )
-            ),
-          ),
 
-          //welcome image
-          // Positioned(
-          //   top: 40,
-          //   left: 0,
-          //   right: 0,
-          //   child: Center(
-          //     child: Text(
-          //       "WELCOME BACK",
-          //       style: TextStyle(
-          //         fontFamily: 'Adumu',
-          //         fontSize: 45,
-          //         foreground: Paint()
-          //           ..style = PaintingStyle.stroke
-          //           ..strokeWidth = 4
-          //           ..color = Colors.black,
-          //         ),
-          //     ),
-          //   ),
-          // ),
-
-          //subheading
-          //maybe change so the elements are in a column? for now we're good
-          // Positioned(
-          //   top: 70,
-          //   left: 0,
-          //   right: 0,
-          //   child: Center(
-          //     child: Text(
-          //       "Don't have an account? Sign up",
-          //       style: TextStyle(fontSize: 16, color: Colors.white),
-          //     ),
-          //   ),
-          // ),
-          
-
-          //email and pass textbox
-          Positioned(
-            top: 300,
-            left: 20,
-            right: 20,
-            child: Center(
-              child: Column(
-                children: [
-                  InputField(text: 'UCF Email'),
-                  SizedBox(height: 15),
-                  PasswordInputField(text: 'Password'),
-                  Align(
-                    alignment: Alignment.centerRight,
-
-                    //forgot password button
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                      ),
-                      child: Text('Forgot Password?',
-                        style: TextStyle(
-                          color: Color(0xFFF1F3F7),
+          SafeArea(   //accounts for phone UIs
+            minimum: EdgeInsets.only(top: 55),
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 20,
+                  right: 20,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        //header
+                        SHPEHeaderText(text: 'WELCOME BACK'),
+                        SizedBox(height: 210),    //space before inputs
+                        //email, password
+                        InputField(text: 'UCF Email'),
+                        SizedBox(height: 15),
+                        PasswordInputField(text: 'Password'),
+                        //forgot password button
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                            ),
+                            child: Text('Forgot Password?',
+                              style: TextStyle(
+                                color: Color(0xFFF1F3F7),
+                              )
+                            ),
+                            onPressed: (){
+                              print('clicked forgot password!');
+                            },
+                          ),
                         )
-                      ),
-                      onPressed: (){
-                        print('clicked forgot password!');
-                      },
+                      ]
+                    )
+                  ),
+                ),
+
+                //login button and redirect text
+                Positioned(
+                  bottom: 20,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        //login button
+                        CustomButton(
+                          text: 'Login ',
+                          backgroundColor: Color(0xFFF2AC02),
+                          textColor: Color(0xFFF1F3F7),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const HomeScreen())
+                            );
+                          },
+                        ),
+                        SizedBox(height: 10),
+                        //redirect text
+                         Text(
+                          'Don\'t have an account? Sign up',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Color(0xFFF1F3F7),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
+                  ),
+                ),
+              ],
             ),
           ),
 
-          //login button
-          Positioned(
-            bottom: 50,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: CustomButton(
-                text: 'Login ',
-                backgroundColor: Color(0xFFF2AC02),
-                textColor: Color(0xFFF1F3F7),
-
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen())
-                  );
-                },
-              ),
-            ),
-          ),
+          
         ],
       ),
     );
