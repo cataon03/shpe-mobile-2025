@@ -19,10 +19,12 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        maximumSize: Size.fromHeight(80),
+        fixedSize: Size.fromWidth(MediaQuery.of(context).size.width - 50),  //based on device width
         backgroundColor: backgroundColor,
         foregroundColor: textColor,
-        padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 30),
-        textStyle: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        padding: const EdgeInsets.symmetric(vertical: 22),
+        textStyle: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
       ),
       onPressed: onPressed,
       child: Text(text),

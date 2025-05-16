@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shpeucfmobile/custom_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shpeucfmobile/login.dart';
+import 'package:shpeucfmobile/SignUp.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,9 +17,9 @@ class HomeScreen extends StatelessWidget {
           Image.asset('lib/images/background.png', fit: BoxFit.cover),
           // SHPE Logo
           Positioned(
-            top: 10,
-            left: 20,
-            right: 0,
+            top: 50,
+            left: 30,
+            right: 30,
             child: Align(
               alignment: Alignment.topCenter,
               child: SvgPicture.asset('lib/images/SHPE_Logo.svg', width: 450),
@@ -36,9 +38,11 @@ class HomeScreen extends StatelessWidget {
                     text: 'Login  ',
                     backgroundColor: Color(0xFFF2AC02),
                     textColor: Color(0xFFF1F3F7),
-                    // TODO: Go to login page
                     onPressed: () {
-                      print('SHPE IS THE BEST!!!');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Login()),
+                      );
                     },
                   ),
                   const SizedBox(height: 19), // Spacing between buttons
@@ -46,9 +50,12 @@ class HomeScreen extends StatelessWidget {
                     text: 'Sign Up',
                     backgroundColor: Color(0xFFF1F3F7),
                     textColor: Color(0xFFF2AC02),
-                    // TODO: Go to Sign Up page
+                    //Go to Sign Up page
                     onPressed: () {
-                      print('Go Knights Charge On!');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SignUp()),
+                      );
                     },
                   ),
                 ],
