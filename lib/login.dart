@@ -4,6 +4,8 @@ import 'package:shpeucfmobile/custom_button.dart';
 import 'package:shpeucfmobile/custom_inputFields.dart';
 import 'package:shpeucfmobile/homescreen.dart';
 
+final TextEditingController _ucfEmailController = TextEditingController();
+final TextEditingController _passwordController = TextEditingController();
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -23,7 +25,8 @@ class LoginState extends State<Login> {
           //Background image
           Image.asset('lib/images/background.png', fit: BoxFit.cover),
 
-          SafeArea(   //accounts for phone UIs
+          SafeArea(
+            //accounts for phone UIs
             minimum: EdgeInsets.only(top: 55),
             child: Stack(
               children: [
@@ -36,11 +39,17 @@ class LoginState extends State<Login> {
                       children: [
                         //header
                         SHPEHeaderText(text: 'WELCOME BACK'),
-                        SizedBox(height: 210),    //space before inputs
+                        SizedBox(height: 210), //space before inputs
                         //email, password
-                        InputField(text: 'UCF Email'),
+                        InputField(
+                          text: 'UCF Email',
+                          controller: _ucfEmailController,
+                        ),
                         SizedBox(height: 15),
-                        PasswordInputField(text: 'Password'),
+                        PasswordInputField(
+                          text: 'Password',
+                          controller: _passwordController,
+                        ),
                         SizedBox(height: 5),
 
                         //forgot password link
@@ -58,17 +67,18 @@ class LoginState extends State<Login> {
                                   fontSize: 15,
                                   decoration: TextDecoration.underline,
                                 ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.pushNamed(context, '/');
-                                    print('clicked forgot password!');
-                                  }
-                              )
+                                recognizer:
+                                    TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Navigator.pushNamed(context, '/');
+                                        print('clicked forgot password!');
+                                      },
+                              ),
                             ),
-                          )
-                        )
-                      ]
-                    )
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
 
@@ -88,7 +98,9 @@ class LoginState extends State<Login> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const HomeScreen())
+                              MaterialPageRoute(
+                                builder: (context) => const HomeScreen(),
+                              ),
                             );
                           },
                         ),
@@ -111,38 +123,34 @@ class LoginState extends State<Login> {
                                   color: Color(0xFFF1F3F7),
                                   decoration: TextDecoration.underline,
                                 ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.pushNamed(context, '/signup');
-                                    print('clicked sign up!');
-                                  }
-                              )
-                            ]
-                          )
-                        )
+                                recognizer:
+                                    TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Navigator.pushNamed(context, '/signup');
+                                        print('clicked sign up!');
+                                      },
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
               ],
             ),
-          ), 
+          ),
         ],
       ),
     );
   }
 }
 
-
 //header font
 class SHPEHeaderText extends StatelessWidget {
-  
   final String text;
-  
-  const SHPEHeaderText({
-    super.key,
-    required this.text,
-    });
+
+  const SHPEHeaderText({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -150,8 +158,8 @@ class SHPEHeaderText extends StatelessWidget {
       children: [
         // 1) Fill
         Text(
-           text,
-           style: TextStyle(
+          text,
+          style: TextStyle(
             fontFamily: 'Adumu',
             fontSize: 45,
             color: Color(0xFFF2AC02),
@@ -161,16 +169,17 @@ class SHPEHeaderText extends StatelessWidget {
         // TODO: figure out how to offset the outline like the mockup img
         Text(
           text,
-           style: TextStyle(
+          style: TextStyle(
             fontFamily: 'Adumu',
             fontSize: 45,
-            foreground: Paint()
-              ..style = PaintingStyle.stroke
-              ..strokeWidth = 2
-              ..color = Colors.black,
-            ),
+            foreground:
+                Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 2
+                  ..color = Colors.black,
+          ),
         ),
-      ]
+      ],
     );
   }
 }
