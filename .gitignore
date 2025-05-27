@@ -1,4 +1,8 @@
+# Flutter build & tooling
 .dart_tool/
 .vscode/
-lib/firebase_options.dart
 build/
+
+# Firebase / Secrets
+.env
+lib/firebase_options.dart
