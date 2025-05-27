@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shpeucfmobile/custom_button.dart';
+import 'package:shpeucfmobile/widgets/custom_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shpeucfmobile/login.dart';
-import 'package:shpeucfmobile/SignUp.dart';
+import 'package:shpeucfmobile/screens/login.dart';
+import 'package:shpeucfmobile/screens/SignUp.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

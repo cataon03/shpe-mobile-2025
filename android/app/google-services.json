@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "442807039058",
+    "project_id": "shpemobile-5ac79",
+    "storage_bucket": "shpemobile-5ac79.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442807039058:android:1dff7903f638bb64db5b8b",
+        "android_client_info": {
+          "package_name": "com.example.shpeucfmobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLuetu0ShRBaKpRQ2tsze8KEZLDdITxhM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
