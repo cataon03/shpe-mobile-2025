@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:shpeucfmobile/widgets/custom_button.dart';
 import 'package:shpeucfmobile/widgets/custom_inputFields.dart';
 import 'package:shpeucfmobile/screens/homescreen.dart';
+import 'package:shpeucfmobile/screens/dashboard.dart';
 import 'package:shpeucfmobile/services/firebase_auth_service.dart';
 
 class Login extends StatefulWidget {
@@ -103,7 +104,7 @@ class LoginState extends State<Login> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomeScreen()),
+                                  builder: (context) => const Dashboard()),
                             );
                           },
                         ),
