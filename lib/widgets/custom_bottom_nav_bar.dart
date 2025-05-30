@@ -23,15 +23,25 @@ class CustomBottomNavBar extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: List.generate(_icons.length, (index) {
+        children: List.generate(_iconAssets.length, (index) {
           return GestureDetector(
             onTap: () => onTap(index),
-            child: Icon(
-              _icons[index],
-              size: 30, 
-              color: currentIndex == index
-                  ? Colors.black
-                  : Colors.black.withOpacity(0.5),
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: currentIndex == index
+                  ? Color(0xFFF1F3F7)
+                  : Colors.transparent,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Image.asset(
+                _iconAssets[index],
+                height: 30, 
+                width: 30,
+                color: currentIndex == index
+                    ? Colors.black
+                    : Colors.black.withOpacity(0.5),
+              ),
             ),
           );
         }),
@@ -39,11 +49,11 @@ class CustomBottomNavBar extends StatelessWidget {
     );
   }
 
-  static const List<IconData> _icons = [
-    Icons.home,
-    Icons.image,
-    Icons.calendar_today,
-    Icons.camera_alt,
-    Icons.groups,
+  static const List<String> _iconAssets = [
+    'lib/images/Home.png',
+    'lib/images/Pictures.png',
+    'lib/images/Calendar.png',
+    'lib/images/Qr.png',
+    'lib/images/Leaderboard.png',
   ];
 }
