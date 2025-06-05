@@ -111,7 +111,7 @@ class SignUpState extends State<SignUp> {
 
                             if (user != null) {
                               await user.sendEmailVerification();
-                
+                              
                               await supabaseService.insertUser(
                                 firebaseUid: user.uid,
                                 email: user.email ?? '',
