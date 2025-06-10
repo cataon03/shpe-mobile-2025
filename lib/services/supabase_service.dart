@@ -12,6 +12,8 @@ class SupabaseService {
     required int ucfid,
     required String birthday,
   }) async {
+    final bool isAdmin = email!.trim().toLowerCase().endsWith('@shpeucf.com');
+
     final response = await _client.from('users').insert({
       'firebase_uid': firebaseUid,
       'email': email,
@@ -19,6 +21,7 @@ class SupabaseService {
       'lastname': lastname,
       'ucfid': ucfid,
       'birthday': birthday,
+      'isAdmin': isAdmin,
     }).execute();
 
     if (response.status != 201 && response.status != 200) {
@@ -64,5 +67,17 @@ class SupabaseService {
     }
 
     return List<Map<String, dynamic>>.from(response.data);
+  }
+
+  // Fetch admin and position
+  Future<Map<String, dynamic>?> fetchUserRole(String firebase_uid) async {
+    final row = await _client
+      .from('users')
+      .select('is_admin,position')
+      .eq('firebase_uid',firebase_uid)
+      .maybeSingle();
+    
+    return row;
+
   }
 }
