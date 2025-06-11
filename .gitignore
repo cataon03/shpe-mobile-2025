@@ -6,3 +6,12 @@ build/
 # Firebase / Secrets
 .env
 lib/firebase_options.dart
+
+# Flutter-specific ignores
+.flutter-plugins
+.flutter-plugins-dependencies
+
+
+android/app/google-services.json
+devtools_options.yaml
+firebase.json

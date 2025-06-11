@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:shpeucfmobile/screens/admindashboard.dart';
+import 'package:shpeucfmobile/services/supabase_service.dart';
 import 'package:shpeucfmobile/widgets/custom_button.dart';
 import 'package:shpeucfmobile/widgets/custom_inputFields.dart';
 import 'package:shpeucfmobile/screens/homescreen.dart';
 import 'package:shpeucfmobile/screens/dashboard.dart';
 import 'package:shpeucfmobile/services/firebase_auth_service.dart';
+
+final supabaseService = SupabaseService();
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -100,12 +104,40 @@ class LoginState extends State<Login> {
                           text: 'Login ',
                           backgroundColor: const Color(0xFFF2AC02),
                           textColor: const Color(0xFFF1F3F7),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Dashboard()),
-                            );
+                          onPressed: () async {
+                            try {
+                              //Logic to login in with firebase auth
+                              final fbUser = await FirebaseAuthService().login(emailController.text.trim(), passwordController.text.trim());
+
+                              if(fbUser == null){ 
+                                //TODO add a notification saying email or password is wrong
+                                }
+
+                              final userRole = await supabaseService.fetchUserRole(fbUser!.uid);
+                              final isAdmin = userRole?['is_admin'] as bool? ?? false;
+                              final position = userRole?['position'] as String?;
+
+                              if(isAdmin){
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const AdminDashboard()),
+                                   );
+                              } else{
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const Dashboard()),
+                                   );
+                              }
+                    
+                            } catch (e) {
+                              print('Navigation error: $e');
+                              // for testing just let user pass but in the future remove this 
+                              Navigator.pushReplacement(   
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Dashboard()),
+                                  );
+                            }
                           },
                         ),
                         const SizedBox(height: 10),
