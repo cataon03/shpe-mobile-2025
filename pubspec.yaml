@@ -39,7 +39,6 @@ dependencies:
   url_launcher: ^6.3.1
   cupertino_icons: ^1.0.8
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -51,7 +50,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
   flutter_dotenv: ^5.0.2
-  supabase_flutter: ^1.10.25  
+  supabase_flutter: ^1.10.25
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -74,6 +73,11 @@ flutter:
     - lib/images/Leaderboard.png
     - lib/images/Pictures.png
     - lib/images/Qr.png
+    - lib/images/profile.jpg
+    - lib/images/SHPE.png
+    - lib/images/topOfLeaderboard.png
+    - lib/images/Leaderboard.png
+    - lib/images/leaderboardWord.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
@@ -104,13 +108,11 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
 
-  
   fonts:
     - family: Poppins
       fonts:
         - asset: fonts/Poppins-Regular.ttf
-        
+
     - family: Adumu
       fonts:
         - asset: fonts/Adumu.ttf
-        
