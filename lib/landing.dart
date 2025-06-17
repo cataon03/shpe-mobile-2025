@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shpeucfmobile/event_card.dart';
 import 'package:shpeucfmobile/widgets/custom_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shpeucfmobile/widgets/EventsCarousel.dart';
 
 class Landing extends StatelessWidget {
   const Landing({super.key});
@@ -65,6 +66,22 @@ class Landing extends StatelessWidget {
               onPressed: () {
                 print('Someone clicked yay!!!');
               },
+            ),
+          ),
+
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 150,
+            child:
+            EventsCarousel(
+              events: [ // TODO: Fetch all events from database than add them here
+                Event(title: "Reyjays workshop on Java", imageUrl: 'https://cdn-clekk.nitrocdn.com/tkvYXMZryjYrSVhxKeFTeXElceKUYHeV/assets/images/optimized/rev-cc9e27e/litslink.com/wp-content/uploads/2020/11/what-is-java-image.png'),
+                Event(title: "Resume Workshop by daniel!!", imageUrl: 'https://www.investopedia.com/thmb/wtzEam1DrS2U3VgqoweCRaXzJ8Q=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/resume.asp-FINAL-7d61bbc8181747698b3cbb0b2ed6833e.png'),
+                Event(title: "Denices workshop on Angular", imageUrl: 'https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fcomponents%2Fblog_post_page%2F4088025%2Fcover_image%2Fregular_1708x683%2Fcover-top-18-most-common-angularjs-developer-mistakes-2e83cf285fc1fba29ce743e85c26c757.png')
+
+              ],
+              height: 180,
             ),
           ),
 
