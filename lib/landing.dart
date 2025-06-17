@@ -1,11 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:shpeucfmobile/event_card.dart';
-import 'package:shpeucfmobile/widgets/custom_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shpeucfmobile/widgets/EventsCarousel.dart';
+import 'package:shpeucfmobile/widgets/custom_bottom_nav_bar.dart';
 
-class Landing extends StatelessWidget {
+class Landing extends StatefulWidget {
   const Landing({super.key});
+
+  @override
+  State<Landing> createState() => _LandingState();
+}
+
+class _LandingState extends State<Landing> {
+  int _selectedIndex = 0;
+
+  final List<Widget> _pages = [
+    Center(child: Text('', style: TextStyle(color: Colors.white))),
+    Center(child: Text('', style: TextStyle(color: Colors.white))),
+    Center(child: Text('', style: TextStyle(color: Colors.white))),
+    Center(child: Text('', style: TextStyle(color: Colors.white))),
+    Center(child: Text('', style: TextStyle(color: Colors.white))),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   void showEventDialog(
     BuildContext context,
@@ -54,21 +75,38 @@ class Landing extends StatelessWidget {
               child: SvgPicture.asset('lib/images/SHPE_Logo.svg', width: 150),
             ),
           ),
-
           Positioned(
             top: 240,
             left: 30,
             right: 30,
-            child: CustomButton(
-              text: 'Profile Name',
-              backgroundColor: const Color(0xFFF2AC02),
-              textColor: const Color.fromARGB(255, 31, 62, 105),
+            child: ElevatedButton(
               onPressed: () {
-                print('Someone clicked yay!!!');
+                print('Clicked!');
               },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFFF2AC02),
+                foregroundColor: Color.fromARGB(255, 31, 62, 105),
+                textStyle: const TextStyle(fontFamily: 'Poppins'),
+                padding: EdgeInsets.symmetric(horizontal: 16),
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Center(child: Text('PROFILE')),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: ClipOval(
+                      child: Image.asset(
+                        'lib/images/profile.jpg',
+                        width: 70,
+                        height: 75,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-
           Positioned(
             left: 0,
             right: 0,
@@ -87,6 +125,17 @@ class Landing extends StatelessWidget {
 
           Positioned(
             top: 330,
+            left: 0,
+            right: 0,
+            child: Image.asset(
+              'lib/images/leaderboardWord.png', //replace with events image
+              width: 100,
+              height: 75,
+              fit: BoxFit.contain,
+            ),
+          ),
+          Positioned(
+            top: 410,
             left: 0,
             right: 0,
             child: SizedBox(
@@ -136,6 +185,52 @@ class Landing extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+          Positioned(
+            bottom: 265,
+            left: 0,
+            right: 0,
+            child: Image.asset(
+              'lib/images/leaderboardWord.png',
+              width: 100,
+              height: 75,
+              fit: BoxFit.contain,
+            ),
+          ),
+          Positioned(
+            bottom: 190,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(5, (index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6.0,
+                  ),
+                  child: ClipOval(
+                    child: Image.asset(
+                      'lib/images/topOfLeaderboard.png',
+                      width: 70,
+                      height: 70,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ),
+          Column(
+            children: [
+              Expanded(child: _pages[_selectedIndex]),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 25),
+                child: CustomBottomNavBar(
+                  currentIndex: _selectedIndex,
+                  onTap: _onItemTapped,
+                ),
+              ),
+            ],
           ),
         ],
       ),
