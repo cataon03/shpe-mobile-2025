@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shpeucfmobile/event_card.dart';
-import 'package:shpeucfmobile/widgets/custom_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shpeucfmobile/widgets/custom_bottom_nav_bar.dart';
 
 class Landing extends StatefulWidget {
   const Landing({super.key});
 
-    @override
+  @override
   State<Landing> createState() => _LandingState();
 }
 
@@ -70,7 +69,7 @@ class _LandingState extends State<Landing> {
             top: 75,
             left: 30,
             right: 30,
-            child: Align( 
+            child: Align(
               alignment: Alignment.topCenter,
               child: SvgPicture.asset('lib/images/SHPE_Logo.svg', width: 150),
             ),
@@ -92,15 +91,15 @@ class _LandingState extends State<Landing> {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  Center(
-                    child: Text('PROFILE'),
-                  ),
+                  Center(child: Text('PROFILE')),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Image.asset(
-                      'lib/images/profile.jpg',
-                      width: 80,
-                      height: 80,
+                    child: ClipOval(
+                      child: Image.asset(
+                        'lib/images/profile.jpg',
+                        width: 70,
+                        height: 75,
+                      ),
                     ),
                   ),
                 ],
@@ -109,6 +108,17 @@ class _LandingState extends State<Landing> {
           ),
           Positioned(
             top: 330,
+            left: 0,
+            right: 0,
+            child: Image.asset(
+              'lib/images/leaderboardWord.png', //replace with events image
+              width: 100,
+              height: 75,
+              fit: BoxFit.contain,
+            ),
+          ),
+          Positioned(
+            top: 410,
             left: 0,
             right: 0,
             child: SizedBox(
@@ -128,7 +138,7 @@ class _LandingState extends State<Landing> {
                             'Tech Talk',
                             'Today at 4pm',
                             'come learn some java witth reyjay!!',
-                      ),
+                          ),
                     ),
                     EventCard(
                       title: 'Resume Workshop by daniel!!',
@@ -140,7 +150,7 @@ class _LandingState extends State<Landing> {
                             'Resume Workshop',
                             'june 15 at 4pm',
                             '',
-                      ),
+                          ),
                     ),
                     EventCard(
                       title: 'Denices workshop on Angular',
@@ -152,11 +162,45 @@ class _LandingState extends State<Landing> {
                             'Angular!!',
                             'Thursday at 7:30PM',
                             'Come learn angular with SHPE!',
-                      ),
+                          ),
                     ),
                   ],
                 ),
               ),
+            ),
+          ),
+          Positioned(
+            bottom: 265,
+            left: 0,
+            right: 0,
+            child: Image.asset(
+              'lib/images/leaderboardWord.png',
+              width: 100,
+              height: 75,
+              fit: BoxFit.contain,
+            ),
+          ),
+          Positioned(
+            bottom: 190,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(5, (index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6.0,
+                  ),
+                  child: ClipOval(
+                    child: Image.asset(
+                      'lib/images/topOfLeaderboard.png',
+                      width: 70,
+                      height: 70,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              }),
             ),
           ),
           Column(
