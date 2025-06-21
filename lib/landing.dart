@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shpeucfmobile/event_card.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shpeucfmobile/widgets/EventsCarousel.dart';
+import 'package:shpeucfmobile/screens/login.dart';
+import 'package:shpeucfmobile/models/event.dart';
+import 'package:shpeucfmobile/widgets/events_carousel.dart';
 import 'package:shpeucfmobile/widgets/custom_bottom_nav_bar.dart';
+import 'package:shpeucfmobile/services/supabase_service.dart';
 
 class Landing extends StatefulWidget {
   const Landing({super.key});
@@ -13,6 +15,16 @@ class Landing extends StatefulWidget {
 
 class _LandingState extends State<Landing> {
   int _selectedIndex = 0;
+  late final SupabaseService _service;
+  late final Future<List<Event>> _eventsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _service = SupabaseService();
+    _eventsFuture = supabaseService.fetchEvents();
+    
+  }
 
   final List<Widget> _pages = [
     Center(child: Text('', style: TextStyle(color: Colors.white))),
@@ -60,6 +72,14 @@ class _LandingState extends State<Landing> {
 
   @override
   Widget build(BuildContext context) {
+    final sampleEvents = List.generate(
+      5,
+      (i) => Event(
+        id: '$i',
+        name: 'Event $i',
+        imageUrl: 'https://picsum.photos/seed/$i/600/400',
+      ),
+    );
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -107,22 +127,33 @@ class _LandingState extends State<Landing> {
               ),
             ),
           ),
+
+          // -----------EVENTS AREA
           Positioned(
+            bottom: 330,
+            height: 200,
             left: 0,
             right: 0,
-            bottom: 150,
-            child:
-            EventsCarousel(
-              events: [ // TODO: Fetch all events from database than add them here
-                Event(title: "Reyjays workshop on Java", imageUrl: 'https://cdn-clekk.nitrocdn.com/tkvYXMZryjYrSVhxKeFTeXElceKUYHeV/assets/images/optimized/rev-cc9e27e/litslink.com/wp-content/uploads/2020/11/what-is-java-image.png'),
-                Event(title: "Resume Workshop by daniel!!", imageUrl: 'https://www.investopedia.com/thmb/wtzEam1DrS2U3VgqoweCRaXzJ8Q=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/resume.asp-FINAL-7d61bbc8181747698b3cbb0b2ed6833e.png'),
-                Event(title: "Denices workshop on Angular", imageUrl: 'https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fcomponents%2Fblog_post_page%2F4088025%2Fcover_image%2Fregular_1708x683%2Fcover-top-18-most-common-angularjs-developer-mistakes-2e83cf285fc1fba29ce743e85c26c757.png')
+            child: FutureBuilder<List<Event>>(
+              future: _eventsFuture,
+              builder: (context,snap){
+                if(snap.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (snap.hasError) {
+                  return Center(child: Text('Error: ${snap.error}'));
+                }
+                final events = snap.data ?? [];
+                if (events.isEmpty) {
+                  return const Center(child: Text('no events yet'),);
+                }
+                return EventsCarousel(events: events);
+              }
+              )
 
-              ],
-              height: 180,
-            ),
+            
           ),
-
+          
           Positioned(
             top: 330,
             left: 0,
@@ -134,58 +165,7 @@ class _LandingState extends State<Landing> {
               fit: BoxFit.contain,
             ),
           ),
-          Positioned(
-            top: 410,
-            left: 0,
-            right: 0,
-            child: SizedBox(
-              height: 160,
-              child: Center(
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 18),
-                  children: [
-                    EventCard(
-                      title: 'Reyjays workshop on Java',
-                      time: 'Today at 2pm',
-                      description: 'come leearn some java witth rayjay!!',
-                      onTap:
-                          () => showEventDialog(
-                            context,
-                            'Tech Talk',
-                            'Today at 4pm',
-                            'come learn some java witth reyjay!!',
-                          ),
-                    ),
-                    EventCard(
-                      title: 'Resume Workshop by daniel!!',
-                      time: 'june 15 at 4pm',
-                      description: 'get that resume in top shape!!!',
-                      onTap:
-                          () => showEventDialog(
-                            context,
-                            'Resume Workshop',
-                            'june 15 at 4pm',
-                            '',
-                          ),
-                    ),
-                    EventCard(
-                      title: 'Denices workshop on Angular',
-                      time: 'Thursday at 7:30PM',
-                      description: 'Come learn angular with SHPE!',
-                      onTap:
-                          () => showEventDialog(
-                            context,
-                            'Angular!!',
-                            'Thursday at 7:30PM',
-                            'Come learn angular with SHPE!',
-                          ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          
           Positioned(
             bottom: 265,
             left: 0,

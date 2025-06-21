@@ -1,4 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../models/event.dart';
 
 class SupabaseService {
   final SupabaseClient _client = Supabase.instance.client;
@@ -80,4 +81,19 @@ class SupabaseService {
     return row;
 
   }
+
+  // Fetch all rows from events
+  Future<List<Event>> fetchEvents() async {
+    final data = await _client
+        .from('Events')
+        .select('*')       // grab everything for now
+        .order('event_date', ascending: true)
+        .limit(10);        // keep the list short
+
+    // Supabase returns a List<dynamic>; cast & map to Event
+    return (data as List)
+        .map((row) => Event.fromJson(row as Map<String, dynamic>))
+        .toList();
+  }
 }
+
