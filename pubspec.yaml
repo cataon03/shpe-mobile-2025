@@ -78,6 +78,7 @@ flutter:
     - lib/images/topOfLeaderboard.png
     - lib/images/Leaderboard.png
     - lib/images/leaderboardWord.png
+    - lib/images/topOfLeaderboard.svg
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

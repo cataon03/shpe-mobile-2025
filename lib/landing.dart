@@ -5,6 +5,7 @@ import 'package:shpeucfmobile/models/event.dart';
 import 'package:shpeucfmobile/widgets/events_carousel.dart';
 import 'package:shpeucfmobile/widgets/custom_bottom_nav_bar.dart';
 import 'package:shpeucfmobile/services/supabase_service.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Landing extends StatefulWidget {
   const Landing({super.key});
@@ -14,6 +15,8 @@ class Landing extends StatefulWidget {
 }
 
 class _LandingState extends State<Landing> {
+  List<Map<String, dynamic>> topUsers = [];
+  bool isLoading = true;
   int _selectedIndex = 0;
   late final SupabaseService _service;
   late final Future<List<Event>> _eventsFuture;
@@ -23,7 +26,27 @@ class _LandingState extends State<Landing> {
     super.initState();
     _service = SupabaseService();
     _eventsFuture = supabaseService.fetchEvents();
-    
+    fetchTopUsers(); // Call the fetch function
+  }
+
+  Future<void> fetchTopUsers() async {
+    final supabase = Supabase.instance.client;
+
+    try {
+      final List data = await supabase
+          .from('users')
+          .select('firstname, points')
+          .order('points', ascending: false)
+          .limit(5);
+
+      setState(() {
+        topUsers = List<Map<String, dynamic>>.from(data);
+        isLoading = false;
+      });
+    } catch (error) {
+      print('Error fetching users: $error');
+      setState(() => isLoading = false);
+    }
   }
 
   final List<Widget> _pages = [
@@ -136,8 +159,8 @@ class _LandingState extends State<Landing> {
             right: 0,
             child: FutureBuilder<List<Event>>(
               future: _eventsFuture,
-              builder: (context,snap){
-                if(snap.connectionState == ConnectionState.waiting) {
+              builder: (context, snap) {
+                if (snap.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
                 if (snap.hasError) {
@@ -145,15 +168,13 @@ class _LandingState extends State<Landing> {
                 }
                 final events = snap.data ?? [];
                 if (events.isEmpty) {
-                  return const Center(child: Text('no events yet'),);
+                  return const Center(child: Text('no events yet'));
                 }
                 return EventsCarousel(events: events);
-              }
-              )
-
-            
+              },
+            ),
           ),
-          
+
           Positioned(
             top: 330,
             left: 0,
@@ -165,7 +186,7 @@ class _LandingState extends State<Landing> {
               fit: BoxFit.contain,
             ),
           ),
-          
+
           Positioned(
             bottom: 265,
             left: 0,
@@ -177,29 +198,45 @@ class _LandingState extends State<Landing> {
               fit: BoxFit.contain,
             ),
           ),
-          Positioned(
-            bottom: 190,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(5, (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 6.0,
-                  ),
-                  child: ClipOval(
-                    child: Image.asset(
-                      'lib/images/topOfLeaderboard.png',
-                      width: 70,
-                      height: 70,
-                      fit: BoxFit.cover,
+          if (!isLoading && topUsers.isNotEmpty)
+            Positioned(
+              bottom: MediaQuery.of(context).size.height * 0.22,
+              left: 0,
+              right: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(topUsers.length, (index) {
+                  final user = topUsers[index];
+                  final screenWidth = MediaQuery.of(context).size.width;
+
+                  return Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.015,
                     ),
-                  ),
-                );
-              }),
+                    child: Column(
+                      children: [
+                        ClipOval(
+                          child: SvgPicture.asset(
+                            'lib/images/topOfLeaderboard.svg',
+                            width: screenWidth * 0.15,
+                            height: screenWidth * 0.17,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          user['points'].toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+              ),
             ),
-          ),
+
           Column(
             children: [
               Expanded(child: _pages[_selectedIndex]),
