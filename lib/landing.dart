@@ -26,7 +26,7 @@ class _LandingState extends State<Landing> {
     super.initState();
     _service = SupabaseService();
     _eventsFuture = supabaseService.fetchEvents();
-    fetchTopUsers(); // Call the fetch function
+    fetchTopUsers();
   }
 
   Future<void> fetchTopUsers() async {
@@ -135,12 +135,21 @@ class _LandingState extends State<Landing> {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  Center(child: Text('PROFILE')),
+                  Center(
+                    child: Text(
+                      'PROFILE',
+                      style: TextStyle(
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: ClipOval(
                       child: Image.asset(
-                        'lib/images/profile.jpg',
+                        'lib/images/profile2.png',
                         width: 70,
                         height: 75,
                       ),
@@ -180,27 +189,27 @@ class _LandingState extends State<Landing> {
             left: 0,
             right: 0,
             child: Image.asset(
-              'lib/images/leaderboardWord.png', //replace with events image
-              width: 100,
-              height: 75,
+              'lib/images/events.png',
+              width: 70,
+              height: 50,
               fit: BoxFit.contain,
             ),
           ),
 
           Positioned(
-            bottom: 265,
+            bottom: 255,
             left: 0,
             right: 0,
             child: Image.asset(
-              'lib/images/leaderboardWord.png',
-              width: 100,
-              height: 75,
+              'lib/images/leaderboardWord2.png',
+              width: 50,
+              height: 45,
               fit: BoxFit.contain,
             ),
           ),
           if (!isLoading && topUsers.isNotEmpty)
             Positioned(
-              bottom: MediaQuery.of(context).size.height * 0.22,
+              bottom: MediaQuery.of(context).size.height * 0.15,
               left: 0,
               right: 0,
               child: Row(
