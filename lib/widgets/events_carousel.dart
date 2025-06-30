@@ -1,6 +1,8 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:shpeucfmobile/models/event.dart';
+import 'package:shpeucfmobile/screens/eventdetails.dart';
+
 
 
 /// ─── 2. CAROUSEL WIDGET ─────────────────────────────────────────────────────
@@ -43,6 +45,11 @@ class _EventsCarouselState extends State<EventsCarousel> {
             child: GestureDetector(
               onTap: () { // your part here Daniel
                 // TODO: push to EventDetailsPage(event: widget.events[index]);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EventDetailsPage(event: widget.events[index]),
+                  )
+                );
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
