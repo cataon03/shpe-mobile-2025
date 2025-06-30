@@ -35,143 +35,131 @@ class _ProfileState extends State<Profile> {
         fit: StackFit.expand,
         children: [
           Image.asset('lib/images/background.png', fit: BoxFit.cover),
-          Positioned(
-            bottom: 600,
-            left: 0,
-            right: 0,
+          Container(
+            alignment: Alignment.topCenter,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: Image.asset(
-                width: 500,
-                height: 510,
                 'lib/images/ProfileBackground.jpeg',
+                width: double.infinity,
+                height: 340,
+                fit: BoxFit.cover,
               ),
             ),
           ),
-          Positioned(
-            left: 70,
-            child: Image.asset(width: 150, height: 150, 'lib/images/SHPE2.png'),
+          Container(
+            alignment: Alignment.topLeft,
+            padding: EdgeInsets.only(left: 70, top: 5),
+            child: Image.asset(width: 150, height: 150, 'lib/images/SHPE2.png')
           ),
-          Positioned(
-            top: 35,
-            left: 20,
+          Container(
+            alignment: Alignment.topLeft,
+            padding: EdgeInsets.only(left: 20, top: 37),
             child: GestureDetector(
-              onTap: () {
+              onTap:() {
                 Navigator.push(
-                  context, 
+                  context,
                   MaterialPageRoute(builder: (context) => const Landing()),
                 );
               },
-              child: Image.asset(
-                width: 50,
-                height: 50,
-                'lib/images/backbutton.png',
-              ),
-            ),
+              child: Image.asset(width: 50, height: 50, 'lib/images/backbutton.png',),
+            )
           ),
-          Positioned(
-            top: 100,
-            left: 0,
-            right: 0,
+          Container(
+            alignment: Alignment.topCenter,
+            padding: EdgeInsets.only(top: 100),
             child: Image.asset(
               width: 200,
               height: 200,
-              'lib/images/Profile2.png',
-            ),
+              'lib/images/Profile2.png'
+            )
           ),
-          Positioned(
-            bottom: 270,
-            left: 10,
-            right: 10,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: () {
-                print("username");
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFF2AC02),
-                textStyle: const TextStyle(fontFamily: 'Poppins'),
-                padding: EdgeInsets.symmetric(horizontal: 16),
-              ),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Center(
-                    child: Text(
-                      'USERNAME',
-                      style: TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            padding: EdgeInsets.only(bottom: 270),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    print('username');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFFF2AC02),
+                    textStyle: const TextStyle(fontFamily: 'Poppins'),
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    fixedSize: Size(MediaQuery.sizeOf(context).width - 20, 50),
                   ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 200,
-            left: 10,
-            right: 10,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: () {
-                print("notifications");
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFF2AC02),
-                textStyle: const TextStyle(fontFamily: 'Poppins'),
-                padding: EdgeInsets.symmetric(horizontal: 16),
-              ),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Center(
-                    child: Text(
-                      'NOTIFICATIONS',
-                      style: TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                  child: Text(
+                    'USERNAME',
+                    style: TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
-                  ),
-                ],
-              ),
-            ),
+                  )
+                )
+              ],
+            )
           ),
-          Positioned(
-            bottom: 130,
-            left: 10,
-            right: 10,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: () {
-                print("settings");
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFF2AC02),
-                textStyle: const TextStyle(fontFamily: 'Poppins'),
-                padding: EdgeInsets.symmetric(horizontal: 16),
-              ),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Center(
-                    child: Text(
-                      'SETTINGS',
-                      style: TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            padding: EdgeInsets.only(bottom: 200),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    print('notifications');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFFF2AC02),
+                    textStyle: const TextStyle(fontFamily: 'Poppins'),
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    fixedSize: Size(MediaQuery.sizeOf(context).width - 20, 50),
+                  ),
+                  child: Text(
+                    'NOTIFICATIONS',
+                    style: TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
-                  ),
-                ],
-              ),
-            ),
+                  )
+                )
+              ],
+            )
           ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            padding: EdgeInsets.only(bottom: 130),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    print('settings');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFFF2AC02),
+                    textStyle: const TextStyle(fontFamily: 'Poppins'),
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    fixedSize: Size(MediaQuery.sizeOf(context).width - 20, 50),
+                  ),
+                  child: Text(
+                    'SETTINGS',
+                    style: TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  )
+                )
+              ],
+            )
+          ),
+
+          //----------Navbar----------
           Column(
             children: [
               Expanded(child: _pages[_selectedIndex]),
