@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shpeucfmobile/profile.dart';
 import 'package:shpeucfmobile/screens/login.dart';
 import 'package:shpeucfmobile/models/event.dart';
 import 'package:shpeucfmobile/widgets/events_carousel.dart';
@@ -124,7 +125,10 @@ class _LandingState extends State<Landing> {
             right: 30,
             child: ElevatedButton(
               onPressed: () {
-                print('Clicked!');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Profile()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFFF2AC02),
