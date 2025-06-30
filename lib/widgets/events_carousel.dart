@@ -36,7 +36,7 @@ class _EventsCarouselState extends State<EventsCarousel> {
         itemBuilder: (context, index) {
           final delta = (_page - index).abs();
           final scale = 1 - (delta * 0.15).clamp(0.0, 1.0);
-          final blurSigma = (delta * 8).clamp(0.0, 8.0);
+          final blurSigma = (delta * 4).clamp(0.0, 4.0);
 
           return Transform.scale(
             scale: scale,
