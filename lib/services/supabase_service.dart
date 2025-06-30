@@ -1,4 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dart:convert'; // for utf8.encode
+import 'package:crypto/crypto.dart'; // for md5 or sha256
 import '../models/event.dart';
 
 class SupabaseService {
@@ -94,6 +96,18 @@ class SupabaseService {
     return (data as List)
         .map((row) => Event.fromJson(row as Map<String, dynamic>))
         .toList();
+  }
+
+  
+  // Deterministically assign profile picture based on name
+  String getAvatarUrl(String name) {
+    final avatars = List.generate(9, (i) => 'https://lexgvoiyqbltlhlicebj.supabase.co/storage/v1/object/public/avatars//profile$i.svg');
+
+     final hash = md5.convert(utf8.encode(name)).bytes;
+     final index = hash[0] % 9;
+
+     return avatars[index];
+
   }
 }
 

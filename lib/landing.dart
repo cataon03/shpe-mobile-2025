@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shpeucfmobile/profile.dart';
 import 'package:shpeucfmobile/screens/login.dart';
 import 'package:shpeucfmobile/models/event.dart';
 import 'package:shpeucfmobile/widgets/events_carousel.dart';
@@ -31,7 +32,7 @@ class _LandingState extends State<Landing> {
 
   Future<void> fetchTopUsers() async {
     final supabase = Supabase.instance.client;
-
+    // fetching leaderboard data
     try {
       final List data = await supabase
           .from('users')
@@ -63,46 +64,10 @@ class _LandingState extends State<Landing> {
     });
   }
 
-  void showEventDialog(
-    BuildContext context,
-    String title,
-    String time,
-    String description,
-  ) {
-    showDialog(
-      context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(title),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Time: $time'),
-                const SizedBox(height: 8),
-                Text(description),
-              ],
-            ),
-            actions: [
-              TextButton(
-                child: const Text('Close'),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    final sampleEvents = List.generate(
-      5,
-      (i) => Event(
-        id: '$i',
-        name: 'Event $i',
-        imageUrl: 'https://picsum.photos/seed/$i/600/400',
-      ),
-    );
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -124,7 +89,10 @@ class _LandingState extends State<Landing> {
             right: 30,
             child: ElevatedButton(
               onPressed: () {
-                print('Clicked!');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Profile()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFFF2AC02),
@@ -183,7 +151,7 @@ class _LandingState extends State<Landing> {
               },
             ),
           ),
-
+          
           Positioned(
             top: 330,
             left: 0,
@@ -196,8 +164,9 @@ class _LandingState extends State<Landing> {
             ),
           ),
 
+// -----------------Leaderboards HERE -----------
           Positioned(
-            bottom: 255,
+            bottom: screenWidth * .6,
             left: 0,
             right: 0,
             child: Image.asset(
@@ -209,15 +178,15 @@ class _LandingState extends State<Landing> {
           ),
           if (!isLoading && topUsers.isNotEmpty)
             Positioned(
-              bottom: MediaQuery.of(context).size.height * 0.15,
+              bottom: MediaQuery.of(context).size.height * 0.13,
               left: 0,
               right: 0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(topUsers.length, (index) {
                   final user = topUsers[index];
-                  final screenWidth = MediaQuery.of(context).size.width;
-
+                  final img = _service.getAvatarUrl(user['firstname']);
+                  
                   return Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: screenWidth * 0.015,
@@ -225,13 +194,24 @@ class _LandingState extends State<Landing> {
                     child: Column(
                       children: [
                         ClipOval(
-                          child: SvgPicture.asset(
-                            'lib/images/topOfLeaderboard.svg',
+                          child: SizedBox(
                             width: screenWidth * 0.15,
                             height: screenWidth * 0.17,
+                          child: SvgPicture.network(
+                            img,
+                            fit: BoxFit.cover,
+                            
+                          ),
                           ),
                         ),
                         const SizedBox(height: 4),
+                        Text(
+                          user['firstname'],
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold, 
+                            )
+                        ),
                         Text(
                           user['points'].toString(),
                           style: const TextStyle(
@@ -246,6 +226,7 @@ class _LandingState extends State<Landing> {
               ),
             ),
 
+          //----------Navbar----------
           Column(
             children: [
               Expanded(child: _pages[_selectedIndex]),
