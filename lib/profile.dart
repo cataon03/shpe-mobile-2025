@@ -54,7 +54,7 @@ class _ProfileState extends State<Profile> {
           ),
           Container(
             alignment: Alignment.topLeft,
-            padding: EdgeInsets.only(left: 20, top: 37),
+            padding: EdgeInsets.only(left: 20, top: 38),
             child: GestureDetector(
               onTap:() {
                 Navigator.push(
