@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:shpeucfmobile/landing.dart';
+import 'package:shpeucfmobile/services/supabase_service.dart';
 import 'package:shpeucfmobile/widgets/custom_bottom_nav_bar.dart';
-import 'package:shpeucfmobile/widgets/custom_button.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -11,8 +13,70 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  bool isLoading = true;
+  /*List<Map<String, dynamic>> curUser = [
+    {
+      //'userId': 'user1234',
+      //'firstname': 'first',
+      //'lastname': 'middle last',
+      //'created_at': 'Spring 2025',
+      //'points': '0',
+      //'events_attended': '0',
+      //'leaderboard_position': '0',
+    },
+  ];
+  bool isLoading = true;*/
   int _selectedIndex = 0;
+  /*late final SupabaseService _service;
+
+  @override
+  void initState() {
+    super.initState();
+    _service = SupabaseService();
+    fetchUsers();
+  }
+
+  Future<void> fetchUsers() async {
+    final supabase = Supabase.instance.client;
+    try {
+      final user = supabase.auth.currentUser;
+
+      print('here');
+
+      final userId = user?.id;
+
+      print('here2');
+      final userInfo = await supabase
+          .from('users')
+          .select('firstname, lastname, points')
+          .eq('id', userId)
+          .limit(1);
+
+      print('hi');
+
+      final users = await supabase
+          .from('users')
+          .select('id, points')
+          .order('points, ascending: false');
+
+      final index = users.indexWhere((u) => u['id'] == userId);
+      final leaderboardPosition = index >= 0 ? index + 1 : -1;
+
+      print('hi2');
+
+      userInfo['leaderboard_postion'] = leaderboardPosition.toString();
+      userInfo['userId'] = userId;
+
+      setState(() {
+        curUser = List<Map<String, dynamic>>.from(userInfo);
+        curUser = [userInfo];
+        isLoading = false;
+        print('curUser = $curUser');
+      });
+    } catch (error) {
+      print('Error fetching users: $error');
+      setState(() => isLoading = false);
+    }
+  }*/
 
   final List<Widget> _pages = [
     Center(child: Text('', style: TextStyle(color: Colors.white))),
@@ -58,7 +122,7 @@ class _ProfileState extends State<Profile> {
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
-                  context, 
+                  context,
                   MaterialPageRoute(builder: (context) => const Landing()),
                 );
               },
@@ -69,16 +133,145 @@ class _ProfileState extends State<Profile> {
               ),
             ),
           ),
-          Positioned(
-            top: 100,
-            left: 0,
-            right: 0,
-            child: Image.asset(
-              width: 200,
-              height: 200,
-              'lib/images/Profile2.png',
+          /*if (!isLoading && curUser.isNotEmpty)
+            Positioned(
+              top: 100,
+              left: 0,
+              right: 0,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(0.05), //make more circular
+                child: SvgPicture.network(
+                  _service.getAvatarUrl('firstname, lastname'),
+                  height: 200,
+                  width: 150,
+                  fit: BoxFit.contain,
+                ),
+              ),
             ),
-          ),
+          //spot for username, name, date started
+          if (!isLoading && curUser.isNotEmpty)
+            Positioned(
+              top: 350,
+              left: 0,
+              right: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(curUser.length, (index) {
+                  final user = curUser[index];
+
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        Text(
+                          user['userId'].toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Adumu',
+                            fontSize: 27,
+                          ),
+                        ),
+                        Text(
+                          user['firstname'].toString() +
+                              ' ' +
+                              user['lastname'].toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Poppins',
+                            fontSize: 20,
+                          ),
+                        ),
+                        Text(
+                          user['created_at'].toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Poppins',
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+              ),
+            ),
+          //spot for points, leaderboard position, and events attended
+          if (!isLoading && curUser.isNotEmpty)
+            Positioned(
+                top: 470,
+                left: 0,
+                right: 0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                        children: [
+                          Text(
+                            curUser[0]['points'].toString(),
+                            style: const TextStyle(
+                              color: Color(0xFFF2AC02),
+                              fontFamily: 'Adumu',
+                              fontSize: 50,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'POINTS',
+                            style: const TextStyle(
+                              color: Color(0xFFF2AC02),
+                              fontFamily: 'Poppins',
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                    ),
+                    SizedBox(width: 50,),
+                    Column(
+                        children: [
+                          Text(
+                            curUser[0]['leaderboard_position'].toString(),
+                            style: const TextStyle(
+                              color: Color(0xFFF2AC02),
+                              fontFamily: 'Adumu',
+                              fontSize: 50,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'LEADERBOARD',
+                            style: const TextStyle(
+                              color: Color(0xFFF2AC02),
+                              fontFamily: 'Poppins',
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                    ),
+                    SizedBox(width: 50,),
+                    Column(
+                        children: [
+                          Text(
+                            curUser[0]['events'].toString(),
+                            style: const TextStyle(
+                              color: Color(0xFFF2AC02),
+                              fontFamily: 'Adumu',
+                              fontSize: 50,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'EVENTS',
+                            style: const TextStyle(
+                              color: Color(0xFFF2AC02),
+                              fontFamily: 'Poppins',
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                    ),
+                  ],
+                ),
+              ),
           Positioned(
             bottom: 270,
             left: 10,
@@ -171,7 +364,7 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-          ),
+          ),*/
           Column(
             children: [
               Expanded(child: _pages[_selectedIndex]),
