@@ -32,10 +32,7 @@ class _DashboardState extends State<Dashboard> {
       child: Text('Calendar Page', 
       style: TextStyle(color: Colors.white))),
 
-    Center(
-      child: Text('Calendar Page', 
-      style: TextStyle(color: Colors.white))
-    ),
+    CodeScanner(),
 
     Center(
     child: Text('Members Page', 
@@ -49,6 +46,7 @@ class _DashboardState extends State<Dashboard> {
   }
 
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,16 +56,7 @@ class _DashboardState extends State<Dashboard> {
         children: [
           Image.asset('lib/images/background.png', fit: BoxFit.cover),
           //button placeholde
-           ElevatedButton(
-           onPressed: () {
-            Navigator.push(
-             context,
-            MaterialPageRoute(
-            builder: (context) => CodeScanner()),
-          );
-        },
-        child: Text('QR Code Scanner'),
-        ),//button placeholder
+           //button placeholder
       
           Column(
           children: [
