@@ -74,154 +74,220 @@ class _LandingState extends State<Landing> {
         fit: StackFit.expand,
         children: [
           Image.asset('lib/images/background.png', fit: BoxFit.cover),
-          Positioned(
+          Positioned.fill(
             top: screenHeight * 0.01,
             left: 0,
             right: 0,
             child: SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SvgPicture.asset('lib/images/SHPE_Logo.svg', width: 150),
-                  SizedBox(height: 10),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const Profile()),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFF2AC02),
-                        foregroundColor: Color.fromARGB(255, 31, 62, 105),
-                        textStyle: const TextStyle(fontFamily: 'Poppins'),
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                      ),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Center(
-                            child: Text(
-                              'PROFILE',
-                              style: TextStyle(
-                                fontSize: 19,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: screenHeight),
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 30),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SvgPicture.asset('lib/images/SHPE_Logo.svg', width: 150),
+                        SizedBox(height: screenHeight * 0.011),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 30),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const Profile()),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFFF2AC02),
+                              foregroundColor: Color.fromARGB(255, 31, 62, 105),
+                              textStyle: const TextStyle(fontFamily: 'Poppins'),
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                            ),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Center(
+                                  child: Text(
+                                    'PROFILE',
+                                    style: TextStyle(
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: ClipOval(
+                                    child: Image.asset(
+                                      'lib/images/Profile2.png',
+                                      width: 70,
+                                      height: 75,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: ClipOval(
-                              child: Image.asset(
-                                'lib/images/Profile2.png',
-                                width: 70,
-                                height: 75,
-                              ),
-                            ),
+                        ),
+                    
+                        // -----------EVENTS AREA
+                        SizedBox(height: screenHeight * 0.017),
+                        Image.asset(
+                          'lib/images/events.png',
+                          width: screenWidth * 0.43,
+                          height: 45,
+                          fit: BoxFit.contain,
+                        ),
+                        SizedBox(height: screenHeight * 0.017),
+                        Container(
+                          height: 200,
+                          child: FutureBuilder<List<Event>>(
+                            future: _eventsFuture,
+                            builder: (context, snap) {
+                              if (snap.connectionState == ConnectionState.waiting) {
+                                return const Center(child: CircularProgressIndicator());
+                              }
+                              if (snap.hasError) {
+                                return Center(child: Text('Error: ${snap.error}'));
+                              }
+                              final events = snap.data ?? [];
+                              if (events.isEmpty) {
+                                return const Center(child: Text('no events yet'));
+                              }
+                              return EventsCarousel(events: events);
+                            },
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: screenHeight * 0.019),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              'lib/images/leaderboardWord2.png',
+                              width: screenWidth * 0.75,
+                              height: 45,
+                              fit: BoxFit.contain,
+                            ),
+                            SizedBox(height: 10),
+                            if (!isLoading && topUsers.isNotEmpty)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: List.generate(topUsers.length, (index) {
+                                  final user = topUsers[index];
+                                  final img = _service.getAvatarUrl(user['firstname']);
+                                  
+                                  return Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: screenWidth * 0.015,
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        ClipOval(
+                                          child: SizedBox(
+                                            width: screenWidth * 0.15,
+                                            height: screenWidth * 0.17,
+                                          child: SvgPicture.network(
+                                            img,
+                                            fit: BoxFit.cover,
+                                            
+                                          ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          user['firstname'],
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold, 
+                                            )
+                                        ),
+                                        Text(
+                                          user['points'].toString(),
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                              ),
+                          ],
+                        ),
+                        SizedBox(height: screenHeight * 0.15),
+                      ],
                     ),
                   ),
-              
-                  // -----------EVENTS AREA
-                  SizedBox(height: 15),
-                  Image.asset(
-                    'lib/images/events.png',
-                    width: screenWidth * 0.43,
-                    height: 45,
-                    fit: BoxFit.contain,
-                  ),
-                  SizedBox(height: 15),
-                  Container(
-                    height: 200,
-                    child: FutureBuilder<List<Event>>(
-                      future: _eventsFuture,
-                      builder: (context, snap) {
-                        if (snap.connectionState == ConnectionState.waiting) {
-                          return const Center(child: CircularProgressIndicator());
-                        }
-                        if (snap.hasError) {
-                          return Center(child: Text('Error: ${snap.error}'));
-                        }
-                        final events = snap.data ?? [];
-                        if (events.isEmpty) {
-                          return const Center(child: Text('no events yet'));
-                        }
-                        return EventsCarousel(events: events);
-                      },
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
 
 // -----------------Leaderboards HERE -----------
-          Positioned(
-            bottom: screenHeight * 0.12,
-            left: 0,
-            right: 0,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Image.asset(
-                  'lib/images/leaderboardWord2.png',
-                  width: screenWidth * 0.75,
-                  height: 45,
-                  fit: BoxFit.contain,
-                ),
-                SizedBox(height: 10),
-                if (!isLoading && topUsers.isNotEmpty)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(topUsers.length, (index) {
-                      final user = topUsers[index];
-                      final img = _service.getAvatarUrl(user['firstname']);
+          // Positioned(
+          //   bottom: screenHeight * 0.12,
+          //   left: 0,
+          //   right: 0,
+          //   child: Column(
+          //     mainAxisAlignment: MainAxisAlignment.start,
+          //     children: [
+          //       Image.asset(
+          //         'lib/images/leaderboardWord2.png',
+          //         width: screenWidth * 0.75,
+          //         height: 45,
+          //         fit: BoxFit.contain,
+          //       ),
+          //       SizedBox(height: 10),
+          //       if (!isLoading && topUsers.isNotEmpty)
+          //         Row(
+          //           mainAxisAlignment: MainAxisAlignment.center,
+          //           children: List.generate(topUsers.length, (index) {
+          //             final user = topUsers[index];
+          //             final img = _service.getAvatarUrl(user['firstname']);
                       
-                      return Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth * 0.015,
-                        ),
-                        child: Column(
-                          children: [
-                            ClipOval(
-                              child: SizedBox(
-                                width: screenWidth * 0.15,
-                                height: screenWidth * 0.17,
-                              child: SvgPicture.network(
-                                img,
-                                fit: BoxFit.cover,
+          //             return Padding(
+          //               padding: EdgeInsets.symmetric(
+          //                 horizontal: screenWidth * 0.015,
+          //               ),
+          //               child: Column(
+          //                 children: [
+          //                   ClipOval(
+          //                     child: SizedBox(
+          //                       width: screenWidth * 0.15,
+          //                       height: screenWidth * 0.17,
+          //                     child: SvgPicture.network(
+          //                       img,
+          //                       fit: BoxFit.cover,
                                 
-                              ),
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              user['firstname'],
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold, 
-                                )
-                            ),
-                            Text(
-                              user['points'].toString(),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                  ),
-              ],
-            ),
-          ),
+          //                     ),
+          //                     ),
+          //                   ),
+          //                   const SizedBox(height: 4),
+          //                   Text(
+          //                     user['firstname'],
+          //                     style: const TextStyle(
+          //                       color: Colors.white,
+          //                       fontWeight: FontWeight.bold, 
+          //                       )
+          //                   ),
+          //                   Text(
+          //                     user['points'].toString(),
+          //                     style: const TextStyle(
+          //                       color: Colors.white,
+          //                       fontWeight: FontWeight.bold,
+          //                     ),
+          //                   ),
+          //                 ],
+          //               ),
+          //             );
+          //           }),
+          //         ),
+          //     ],
+          //   ),
+          // ),
 
           //----------Navbar----------
           Column(
