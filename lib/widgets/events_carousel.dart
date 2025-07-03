@@ -5,7 +5,7 @@ import 'package:shpeucfmobile/screens/eventdetails.dart';
 
 
 
-/// ─── 2. CAROUSEL WIDGET ─────────────────────────────────────────────────────
+/// ──────────── CAROUSEL WIDGET ─────────────────────────────────────────────────────
 class EventsCarousel extends StatefulWidget {
   final List<Event> events;
   const EventsCarousel({super.key, required this.events});

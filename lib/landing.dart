@@ -4,7 +4,6 @@ import 'package:shpeucfmobile/profile.dart';
 import 'package:shpeucfmobile/screens/login.dart';
 import 'package:shpeucfmobile/models/event.dart';
 import 'package:shpeucfmobile/widgets/events_carousel.dart';
-import 'package:shpeucfmobile/widgets/custom_bottom_nav_bar.dart';
 import 'package:shpeucfmobile/services/supabase_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -18,7 +17,6 @@ class Landing extends StatefulWidget {
 class _LandingState extends State<Landing> {
   List<Map<String, dynamic>> topUsers = [];
   bool isLoading = true;
-  int _selectedIndex = 0;
   late final SupabaseService _service;
   late final Future<List<Event>> _eventsFuture;
 
@@ -50,19 +48,9 @@ class _LandingState extends State<Landing> {
     }
   }
 
-  final List<Widget> _pages = [
-    Center(child: Text('', style: TextStyle(color: Colors.white))),
-    Center(child: Text('', style: TextStyle(color: Colors.white))),
-    Center(child: Text('', style: TextStyle(color: Colors.white))),
-    Center(child: Text('', style: TextStyle(color: Colors.white))),
-    Center(child: Text('', style: TextStyle(color: Colors.white))),
-  ];
+  
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  
 
 // TODO: fix issues with scaling (maybe try spaceAround?)
   @override
@@ -160,6 +148,7 @@ class _LandingState extends State<Landing> {
                             },
                           ),
                         ),
+                        // -----LEADERBOARD
                         SizedBox(height: screenHeight * 0.019),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -288,20 +277,6 @@ class _LandingState extends State<Landing> {
           //     ],
           //   ),
           // ),
-
-          //----------Navbar----------
-          Column(
-            children: [
-              Expanded(child: _pages[_selectedIndex]),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 25),
-                child: CustomBottomNavBar(
-                  currentIndex: _selectedIndex,
-                  onTap: _onItemTapped,
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );
