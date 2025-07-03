@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-//import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shpeucfmobile/landing.dart';
 import 'package:shpeucfmobile/screens/dashboard.dart';
 import 'package:shpeucfmobile/screens/homescreen.dart';
 import 'package:shpeucfmobile/screens/leaderboard.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-//import 'firebase_options.dart';
-import 'package:shpeucfmobile/screens/homescreen.dart';
+import 'firebase_options.dart';
 import 'package:shpeucfmobile/screens/login.dart';
 import 'package:shpeucfmobile/screens/SignUp.dart';
 
@@ -16,9 +15,9 @@ Future<void> main() async {
 
   await dotenv.load(fileName: ".env");
 
-//await Firebase.initializeApp(
-  //options: DefaultFirebaseOptions.currentPlatform,
-//);
+await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
 
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL']!,
@@ -40,11 +39,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner:
           false, // Hides the debug banner in the top-right corner
-     home: const Landing(),
-      //routes: {
-        //'/login': (context) => Login(),
-        //'/signup': (context) => SignUp(),
-      //}
+     home: const HomeScreen(),
+      routes: {
+        '/login': (context) => Login(),
+        '/signup': (context) => SignUp(),
+      }
     );
   }
 }

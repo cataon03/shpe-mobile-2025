@@ -5,7 +5,7 @@ import 'package:shpeucfmobile/screens/eventdetails.dart';
 
 
 
-/// ─── 2. CAROUSEL WIDGET ─────────────────────────────────────────────────────
+/// ──────────── CAROUSEL WIDGET ─────────────────────────────────────────────────────
 class EventsCarousel extends StatefulWidget {
   final List<Event> events;
   const EventsCarousel({super.key, required this.events});
@@ -68,28 +68,31 @@ class _EventsCarouselState extends State<EventsCarousel> {
                             child: const SizedBox(),
                           ),
                         ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          height: 60,
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [Colors.transparent, Colors.black54],
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              widget.events[index].name,
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 16),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ),
-                      ),
+                        
+                      // ----gradient and title on event cards
+                      // ----keeping here for now just in case
+                      // Align(
+                      //   alignment: Alignment.bottomCenter,
+                      //   child: Container(
+                      //     height: 60,
+                      //     decoration: const BoxDecoration(
+                      //       gradient: LinearGradient(
+                      //         begin: Alignment.topCenter,
+                      //         end: Alignment.bottomCenter,
+                      //         colors: [Colors.transparent, Colors.black54],
+                      //       ),
+                      //     ),
+                      //     child: Center(
+                      //       child: Text(
+                      //         widget.events[index].name,
+                      //         style: const TextStyle(
+                      //             color: Colors.white, fontSize: 16),
+                      //         maxLines: 1,
+                      //         overflow: TextOverflow.ellipsis,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

@@ -132,6 +132,7 @@ class LoginState extends State<Login> {
                     
                             } catch (e) {
                               print('Navigation error: $e');
+                              
                               // for testing just let user pass but in the future remove this 
                               Navigator.pushReplacement(   
                                   context,
