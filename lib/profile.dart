@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:shpeucfmobile/landing.dart';
 import 'package:shpeucfmobile/services/supabase_service.dart';
 import 'package:shpeucfmobile/widgets/custom_bottom_nav_bar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -31,12 +30,24 @@ class _ProfileState extends State<Profile> {
   Future<void> fetchUsers() async {
     final supabase = Supabase.instance.client;
     try {
-      final List userInfo = await supabase
-          .from('users')
-          .select(
-            'firstname, lastname, points, created_at, events_attended, major',
-          )
-          .limit(1);
+      final user = supabase.auth.currentUser;
+      final userId = user?.id;
+
+      print(userId);
+
+      if (userId == null) {
+        print('No user logged in');
+        return;
+      }
+
+      final List userInfo =
+          await Supabase.instance.client
+              .from('users')
+              .select(
+                'firstname, lastname, points, created_at, events_attended, major',
+              )
+              .eq('id', userId)
+              .single();
 
       setState(() {
         curUser = List<Map<String, dynamic>>.from(userInfo);
@@ -54,7 +65,13 @@ class _ProfileState extends State<Profile> {
     try {
       final user = supabase.auth.currentUser;
       final userId = user?.id;
+
       print(userId);
+
+      if (userId == null) {
+        print('No user logged in');
+        return;
+      }
 
       final List leaderboard = await supabase
           .from('users')
@@ -94,30 +111,18 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+        title: Text(' ', style: TextStyle(fontSize: 0, fontFamily: 'Poppins')),
+        backgroundColor: const Color(0xFFF2AC02),
+        toolbarHeight: 60,
+      ),
       body: Stack(
         fit: StackFit.expand,
         children: [
           Image.asset('lib/images/background.png', fit: BoxFit.cover),
-          Container(
-            alignment: Alignment.topLeft,
-            padding: EdgeInsets.only(left: 20, top: 38),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Landing()),
-                );
-              },
-              child: Image.asset(
-                width: 50,
-                height: 50,
-                'lib/images/backbutton.png',
-              ),
-            ),
-          ),
           if (!isLoading && curUser.isNotEmpty)
             Positioned(
-              top: 100,
+              top: 55,
               left: 0,
               right: 0,
               child: Row(
@@ -147,7 +152,7 @@ class _ProfileState extends State<Profile> {
           //spot for username, name, date started
           if (!isLoading && curUser.isNotEmpty)
             Positioned(
-              top: 350,
+              top: 310,
               left: 0,
               right: 0,
               child: Row(
@@ -195,7 +200,7 @@ class _ProfileState extends State<Profile> {
           //spot for points, leaderboard position, and events attended
           if (!isLoading && !isLoading2 && curUser.isNotEmpty)
             Positioned(
-              top: 470,
+              top: 430,
               left: 0,
               right: 0,
               child: Row(
